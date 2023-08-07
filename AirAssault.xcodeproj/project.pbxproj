@@ -14,6 +14,7 @@
 		BCB8CEFF2A8157CC008D312F /* AirAssaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CEFE2A8157CC008D312F /* AirAssaultTests.swift */; };
 		BCB8CF092A8157CD008D312F /* AirAssaultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF082A8157CD008D312F /* AirAssaultUITests.swift */; };
 		BCB8CF0B2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */; };
+		BCB8CF222A816323008D312F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF212A816323008D312F /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BCB8CF042A8157CD008D312F /* AirAssaultUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirAssaultUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCB8CF082A8157CD008D312F /* AirAssaultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultUITests.swift; sourceTree = "<group>"; };
 		BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BCB8CF212A816323008D312F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				BCB8CEEF2A8157CB008D312F /* ContentView.swift */,
 				BCB8CEF12A8157CC008D312F /* Assets.xcassets */,
 				BCB8CEF32A8157CC008D312F /* Preview Content */,
+				BCB8CF212A816323008D312F /* GameView.swift */,
 			);
 			path = AirAssault;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCB8CEF02A8157CB008D312F /* ContentView.swift in Sources */,
+				BCB8CF222A816323008D312F /* GameView.swift in Sources */,
 				BCB8CEEE2A8157CB008D312F /* AirAssaultApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +429,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,6 +459,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
