@@ -15,6 +15,7 @@
 		BCB8CF092A8157CD008D312F /* AirAssaultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF082A8157CD008D312F /* AirAssaultUITests.swift */; };
 		BCB8CF0B2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */; };
 		BCB8CF222A816323008D312F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF212A816323008D312F /* GameView.swift */; };
+		BCB8CF242A816977008D312F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF232A816977008D312F /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		BCB8CF082A8157CD008D312F /* AirAssaultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultUITests.swift; sourceTree = "<group>"; };
 		BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BCB8CF212A816323008D312F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		BCB8CF232A816977008D312F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				BCB8CEF12A8157CC008D312F /* Assets.xcassets */,
 				BCB8CEF32A8157CC008D312F /* Preview Content */,
 				BCB8CF212A816323008D312F /* GameView.swift */,
+				BCB8CF232A816977008D312F /* GameScene.swift */,
 			);
 			path = AirAssault;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			files = (
 				BCB8CEF02A8157CB008D312F /* ContentView.swift in Sources */,
 				BCB8CF222A816323008D312F /* GameView.swift in Sources */,
+				BCB8CF242A816977008D312F /* GameScene.swift in Sources */,
 				BCB8CEEE2A8157CB008D312F /* AirAssaultApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
