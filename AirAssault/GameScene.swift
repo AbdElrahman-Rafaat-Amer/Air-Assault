@@ -21,8 +21,6 @@ class GameScene : SKScene{
         screenWidth = size.width
         lastTouchLocation = CGPoint(x: screenWidth/2, y: screenHeight)
         
-        //        backgroundColor = SKColor.white
-        
         physicsWorld.gravity = .zero
         
         addPlayer()
@@ -30,6 +28,13 @@ class GameScene : SKScene{
             SKAction.sequence([
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run(addBullet)
+            ])
+        ))
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addEnemies)
             ])
         ))
     }
@@ -60,6 +65,44 @@ class GameScene : SKScene{
         addChild(bullet)
         let magnitude: CGFloat = 2
         bullet.physicsBody?.applyForce(targetPotint: lastTouchLocation, magnitude: magnitude)
+    }
+    
+    private func addEnemies(){
+        let imageNamed = getEnemeyShipName()
+        let enemyShip = SKSpriteNode(imageNamed: imageNamed)
+        let enemyShipX = screenWidth/2
+        let enemyShipY = screenHeight
+        enemyShip.position = CGPoint(x: enemyShipX, y: enemyShipY)
+        
+        enemyShip.physicsBody = SKPhysicsBody(circleOfRadius: enemyShip.size.width/2)
+        enemyShip.physicsBody?.isDynamic = true
+        enemyShip.physicsBody?.categoryBitMask = PhysicsCategory.enemy
+        enemyShip.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+        enemyShip.physicsBody?.collisionBitMask = PhysicsCategory.none
+        enemyShip.physicsBody?.mass = 0.00015
+        enemyShip.physicsBody?.friction = 0
+        enemyShip.physicsBody?.linearDamping = 0
+        addChild(enemyShip)
+        let magnitude: CGFloat = 2
+        enemyShip.physicsBody?.applyForce(targetPotint: CGPoint(x: enemyShipX, y: 0), magnitude: magnitude)
+    }
+    
+    private func getEnemeyShipName() -> String{
+        let enemyLevel = Int.random(in: 1...3)
+        
+        var enemeyShipName = ""
+        switch(enemyLevel){
+        case 1:
+            enemeyShipName = "ic_nuclear_bomb"
+        case 2:
+            enemeyShipName = "ic_enemy_middle"
+        case 3:
+            enemeyShipName = "ic_enenmy_big"
+        default:
+            enemeyShipName = "ic_nuclear_bomb"
+        }
+        
+        return enemeyShipName
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
