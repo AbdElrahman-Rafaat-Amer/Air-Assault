@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BC9195062A89604500642D0E /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9195052A89604500642D0E /* PhysicsCategory.swift */; };
 		BC9195092A89609B00642D0E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9195082A89609B00642D0E /* Extensions.swift */; };
+		BCB7E58C2A8A10FC002C59AE /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7E58B2A8A10FC002C59AE /* Enemy.swift */; };
+		BCB7E58E2A8A116F002C59AE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7E58D2A8A116F002C59AE /* Utils.swift */; };
 		BCB8CEEE2A8157CB008D312F /* AirAssaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CEED2A8157CB008D312F /* AirAssaultApp.swift */; };
 		BCB8CEF02A8157CB008D312F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CEEF2A8157CB008D312F /* ContentView.swift */; };
 		BCB8CEF22A8157CC008D312F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCB8CEF12A8157CC008D312F /* Assets.xcassets */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		BC9195052A89604500642D0E /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		BC9195082A89609B00642D0E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BCB7E58B2A8A10FC002C59AE /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		BCB7E58D2A8A116F002C59AE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		BCB8CEEA2A8157CB008D312F /* AirAssault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirAssault.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCB8CEED2A8157CB008D312F /* AirAssaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultApp.swift; sourceTree = "<group>"; };
 		BCB8CEEF2A8157CB008D312F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,8 +87,17 @@
 			isa = PBXGroup;
 			children = (
 				BC9195082A89609B00642D0E /* Extensions.swift */,
+				BCB7E58D2A8A116F002C59AE /* Utils.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		BCB7E58A2A8A10ED002C59AE /* model */ = {
+			isa = PBXGroup;
+			children = (
+				BCB7E58B2A8A10FC002C59AE /* Enemy.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		BCB8CEE12A8157CB008D312F = {
@@ -110,6 +123,7 @@
 		BCB8CEEC2A8157CB008D312F /* AirAssault */ = {
 			isa = PBXGroup;
 			children = (
+				BCB7E58A2A8A10ED002C59AE /* model */,
 				BC9195072A89608C00642D0E /* utils */,
 				BCB8CEED2A8157CB008D312F /* AirAssaultApp.swift */,
 				BCB8CEEF2A8157CB008D312F /* ContentView.swift */,
@@ -277,12 +291,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCB7E58C2A8A10FC002C59AE /* Enemy.swift in Sources */,
 				BCB8CEF02A8157CB008D312F /* ContentView.swift in Sources */,
 				BC9195092A89609B00642D0E /* Extensions.swift in Sources */,
 				BCB8CF222A816323008D312F /* GameView.swift in Sources */,
 				BC9195062A89604500642D0E /* PhysicsCategory.swift in Sources */,
 				BCB8CF242A816977008D312F /* GameScene.swift in Sources */,
 				BCB8CEEE2A8157CB008D312F /* AirAssaultApp.swift in Sources */,
+				BCB7E58E2A8A116F002C59AE /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

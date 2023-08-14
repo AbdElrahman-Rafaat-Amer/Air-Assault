@@ -68,11 +68,10 @@ class GameScene : SKScene{
     }
     
     private func addEnemies(){
-        let imageNamed = getEnemeyShipName()
-        let enemyShip = SKSpriteNode(imageNamed: imageNamed)
-        let enemyShipX = screenWidth/2
-        let enemyShipY = screenHeight
-        enemyShip.position = CGPoint(x: enemyShipX, y: enemyShipY)
+        let enemyInfo = getEnemeyInfo()
+        let enemyShip = Enemy(imageNamed: enemyInfo.imageNamed)
+        enemyShip.setLevel(level: enemyInfo.level)
+        enemyShip.setupPosition(screenWidth: screenWidth, screenHeight: screenHeight)
         
         enemyShip.physicsBody = SKPhysicsBody(circleOfRadius: enemyShip.size.width/2)
         enemyShip.physicsBody?.isDynamic = true
@@ -83,26 +82,23 @@ class GameScene : SKScene{
         enemyShip.physicsBody?.friction = 0
         enemyShip.physicsBody?.linearDamping = 0
         addChild(enemyShip)
-        let magnitude: CGFloat = 2
-        enemyShip.physicsBody?.applyForce(targetPotint: CGPoint(x: enemyShipX, y: 0), magnitude: magnitude)
+        enemyShip.move()
     }
     
-    private func getEnemeyShipName() -> String{
-        let enemyLevel = Int.random(in: 1...3)
+    private func getEnemeyInfo() -> (imageNamed: String, level:EnemyLevel){
+        let enemyLevel = EnemyLevel.allCases.randomElement()!
         
         var enemeyShipName = ""
         switch(enemyLevel){
-        case 1:
+        case .level_1:
             enemeyShipName = "ic_nuclear_bomb"
-        case 2:
+        case .level_2:
             enemeyShipName = "ic_enemy_middle"
-        case 3:
+        case .level_3:
             enemeyShipName = "ic_enenmy_big"
-        default:
-            enemeyShipName = "ic_nuclear_bomb"
         }
         
-        return enemeyShipName
+        return (enemeyShipName, enemyLevel)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
