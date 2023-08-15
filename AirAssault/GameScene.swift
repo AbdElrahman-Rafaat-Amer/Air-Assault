@@ -206,7 +206,18 @@ extension GameScene: SKPhysicsContactDelegate {
     }
     
     func didEnd(_ contact: SKPhysicsContact){
+        var firstBody  = contact.bodyA
+        var secondBody = contact.bodyB
+        if (firstBody.categoryBitMask > secondBody.categoryBitMask){
+            firstBody  = contact.bodyB
+            secondBody = contact.bodyA
+        }
         
+        if firstBody.categoryBitMask & PhysicsCategory.screenEdge != 0 && secondBody.categoryBitMask & PhysicsCategory.enemy != 0 {
+            if let enemy = secondBody.node as? Enemy {
+                enemy.removeFromParent()
+            }
+        }
     }
     
 }
