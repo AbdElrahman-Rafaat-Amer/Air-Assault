@@ -21,6 +21,7 @@ class GameScene : SKScene{
     private let playerShip = SKSpriteNode(imageNamed: "ic_player")
     private var movableNode : SKNode?
     private var lastTouchLocation : CGPoint = CGPoint(x: 0, y: 0)
+    private var points = 0
     
     override func didMove(to view: SKView) {
         
@@ -187,6 +188,69 @@ class GameScene : SKScene{
         let rotateAction = SKAction.rotate(toAngle: -rotationAngle, duration: 1)
         playerShip.run(rotateAction)
     }
+    
+    private func checkPlayerHelp(){
+        let canAddBulletHelp = (points % 7) == 0 && Bool.random()
+        let canAddBombHelp = (points % 5) == 0 && Bool.random()
+ 
+        if canAddBombHelp {
+           addBombHelp()
+        }
+
+        if canAddBulletHelp {
+            addBulletHelp()
+        }
+    }
+    
+    private func addBombHelp(){
+        let bombHelp = SKSpriteNode(imageNamed: "ic_bomb")
+        let width  = bombHelp.size.width
+        let height = bombHelp.size.height
+        
+        let x = random(min: width / 2, max: screenWidth - width/2)
+        let y = screenHeight - height / 2 + 5
+        
+        let startPoint = CGPoint(x: x , y: y)
+        bombHelp.position = startPoint
+        
+        bombHelp.physicsBody = SKPhysicsBody(circleOfRadius: playerShip.size.width/2)
+        bombHelp.physicsBody?.isDynamic = true
+        bombHelp.physicsBody?.categoryBitMask = PhysicsCategory.bombReward
+        bombHelp.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        bombHelp.physicsBody?.collisionBitMask = PhysicsCategory.none
+        bombHelp.physicsBody?.mass = 0.00015
+        bombHelp.physicsBody?.friction = 0
+        bombHelp.physicsBody?.linearDamping = 0
+        addChild(bombHelp)
+        
+        let targetPoint = CGPoint(x: x, y: -y)
+        bombHelp.physicsBody?.applyForce(targetPotint: targetPoint, magnitude: 5)
+    }
+    
+    private func addBulletHelp(){
+        let bulletHelp = SKSpriteNode(imageNamed: "ic_bullet_award")
+        let width  = bulletHelp.size.width
+        let height = bulletHelp.size.height
+        
+        let x = random(min: width / 2, max: screenWidth - width/2)
+        let y = screenHeight - height / 2 + 5
+        
+        let startPoint = CGPoint(x: x , y: y)
+        bulletHelp.position = startPoint
+        
+        bulletHelp.physicsBody = SKPhysicsBody(circleOfRadius: bulletHelp.size.width/2)
+        bulletHelp.physicsBody?.isDynamic = true
+        bulletHelp.physicsBody?.categoryBitMask = PhysicsCategory.bulletReward
+        bulletHelp.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        bulletHelp.physicsBody?.collisionBitMask = PhysicsCategory.none
+        bulletHelp.physicsBody?.mass = 0.00015
+        bulletHelp.physicsBody?.friction = 0
+        bulletHelp.physicsBody?.linearDamping = 0
+        addChild(bulletHelp)
+        
+        let targetPoint = CGPoint(x: x, y: -y)
+        bulletHelp.physicsBody?.applyForce(targetPotint: targetPoint, magnitude: 20)
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -204,7 +268,9 @@ extension GameScene: SKPhysicsContactDelegate {
                 if (enemy.position.y + enemy.size.height / 2) < screenHeight{
                     bullet.removeFromParent()
                     enemy.removeFromParent()
+                    points += enemy.points
                     gameDelegate?.onGetPoints(points: enemy.points)
+                    checkPlayerHelp()
                 }
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.bullet != 0 && secondBody.categoryBitMask & PhysicsCategory.screenEdge != 0 {
