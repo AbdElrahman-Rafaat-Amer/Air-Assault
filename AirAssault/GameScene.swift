@@ -202,6 +202,10 @@ extension GameScene: SKPhysicsContactDelegate {
             if let bullet = firstBody.node{
                 bullet.removeFromParent()
             }
+        }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
+            if let _ = firstBody.node, let _ = secondBody.node{
+              // game over
+            }
         }
     }
     
