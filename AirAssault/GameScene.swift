@@ -8,15 +8,23 @@
 import Foundation
 import SpriteKit
 
+protocol GameProtocol{
+    func onGetPoints(points: Int)
+    func onGameOver()
+}
+
 class GameScene : SKScene{
     
+    var gameDelegate : GameProtocol?
     private var screenWidth  : CGFloat = 0
     private var screenHeight : CGFloat = 0
-    let playerShip = SKSpriteNode(imageNamed: "ic_player")
+    private let playerShip = SKSpriteNode(imageNamed: "ic_player")
     private var movableNode : SKNode?
     private var lastTouchLocation : CGPoint = CGPoint(x: 0, y: 0)
     
     override func didMove(to view: SKView) {
+        
+        backgroundColor = SKColor.black
         screenHeight = size.height
         screenWidth = size.width
         lastTouchLocation = CGPoint(x: screenWidth/2, y: screenHeight)
@@ -196,6 +204,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 if (enemy.position.y + enemy.size.height / 2) < screenHeight{
                     bullet.removeFromParent()
                     enemy.removeFromParent()
+                    gameDelegate?.onGetPoints(points: enemy.points)
                 }
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.bullet != 0 && secondBody.categoryBitMask & PhysicsCategory.screenEdge != 0 {
@@ -204,7 +213,7 @@ extension GameScene: SKPhysicsContactDelegate {
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
             if let _ = firstBody.node, let _ = secondBody.node{
-              // game over
+                gameDelegate?.onGameOver()
             }
         }
     }

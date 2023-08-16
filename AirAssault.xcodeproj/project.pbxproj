@@ -20,6 +20,7 @@
 		BCB8CF0B2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */; };
 		BCB8CF222A816323008D312F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF212A816323008D312F /* GameView.swift */; };
 		BCB8CF242A816977008D312F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CF232A816977008D312F /* GameScene.swift */; };
+		BCCC07072A8D3A1C00841D9D /* UserDefultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC07062A8D3A1C00841D9D /* UserDefultManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		BCB8CF0A2A8157CD008D312F /* AirAssaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirAssaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BCB8CF212A816323008D312F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		BCB8CF232A816977008D312F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		BCCC07062A8D3A1C00841D9D /* UserDefultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefultManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			children = (
 				BC9195082A89609B00642D0E /* Extensions.swift */,
 				BCB7E58D2A8A116F002C59AE /* Utils.swift */,
+				BCCC07062A8D3A1C00841D9D /* UserDefultManager.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCB7E58C2A8A10FC002C59AE /* Enemy.swift in Sources */,
+				BCCC07072A8D3A1C00841D9D /* UserDefultManager.swift in Sources */,
 				BCB8CEF02A8157CB008D312F /* ContentView.swift in Sources */,
 				BC9195092A89609B00642D0E /* Extensions.swift in Sources */,
 				BCB8CF222A816323008D312F /* GameView.swift in Sources */,
