@@ -10,6 +10,7 @@ import SpriteKit
 
 protocol GameProtocol{
     func onGetPoints(points: Int)
+    func onGameOver()
 }
 
 class GameScene : SKScene{
@@ -212,7 +213,7 @@ extension GameScene: SKPhysicsContactDelegate {
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
             if let _ = firstBody.node, let _ = secondBody.node{
-              // game over
+                gameDelegate?.onGameOver()
             }
         }
     }

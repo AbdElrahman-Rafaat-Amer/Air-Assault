@@ -16,10 +16,6 @@ struct GameView: View {
                 let gameScene = GameScene(size: proxy.size)
                 let _ = gameScene.gameDelegate = self
                 SpriteView(scene: gameScene).frame(width: proxy.size.width, height: proxy.size.height)
-                let _ = gameScene.view?.showsFPS = true
-                let _ = gameScene.view?.showsFields = true
-                let _ = gameScene.view?.showsPhysics = true
-                let _ = gameScene.view?.showsNodeCount = true
                 HStack(){
                     Text("Points:").font(.system(size: 25)).foregroundColor(Color.white)
                     
@@ -42,6 +38,17 @@ struct GameView: View {
 extension GameView : GameProtocol{
     func onGetPoints(points: Int) {
         self.points += points
+    }
+    
+    func onGameOver() {
+        saveScore()
+    }
+    
+    private func saveScore(){
+        let highScore = UserDefulatManager.INSTANCE.getHighScore()
+        if (points > highScore) {
+            UserDefulatManager.INSTANCE.saveHighScore(score: points)
+        }
     }
 }
 
