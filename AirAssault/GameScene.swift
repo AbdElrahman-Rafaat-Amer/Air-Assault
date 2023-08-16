@@ -21,7 +21,7 @@ class GameScene : SKScene{
         screenWidth = size.width
         lastTouchLocation = CGPoint(x: screenWidth/2, y: screenHeight)
         
-        physicsWorld.gravity = .zero
+        setupWorldPhysics()
         
         addPlayer()
         run(SKAction.repeatForever(
@@ -39,11 +39,40 @@ class GameScene : SKScene{
         ))
     }
     
+    private func setupWorldPhysics(){
+        physicsWorld.gravity = .zero
+        physicsWorld.contactDelegate = self
+        let padding: CGFloat = 30
+        let leftBottomPoint  = CGPoint(x: 0 - padding, y: 0)
+        let leftTopPoint     = CGPoint(x: 0 - padding, y: screenHeight + padding)
+        let rightBottomPoint = CGPoint(x: screenWidth + padding, y: 0)
+        let rightTopPoint     = CGPoint(x: screenWidth + padding, y: screenHeight + padding)
+        let left    = SKPhysicsBody(edgeFrom: leftBottomPoint, to: leftTopPoint )
+        let right   = SKPhysicsBody(edgeFrom: rightBottomPoint, to: rightTopPoint )
+        let top     = SKPhysicsBody(edgeFrom: leftTopPoint, to: rightTopPoint )
+        let bottom  = SKPhysicsBody(edgeFrom: leftBottomPoint, to: rightBottomPoint )
+        
+        physicsBody = SKPhysicsBody.init(bodies: [left, right, top, bottom])
+        physicsBody?.categoryBitMask = PhysicsCategory.screenEdge
+        physicsBody?.contactTestBitMask = PhysicsCategory.enemy
+        physicsBody?.collisionBitMask = PhysicsCategory.none
+    }
+    
     private func addPlayer(){
         let playerX = screenWidth / 2
         let playerY = playerShip.size.height
         playerShip.position = CGPoint(x: playerX , y: playerY)
         playerShip.zPosition = 2
+        
+        
+        playerShip.physicsBody = SKPhysicsBody(circleOfRadius: playerShip.size.width/2)
+        playerShip.physicsBody?.isDynamic = true
+        playerShip.physicsBody?.categoryBitMask = PhysicsCategory.player
+        playerShip.physicsBody?.contactTestBitMask = PhysicsCategory.enemy
+        playerShip.physicsBody?.collisionBitMask = PhysicsCategory.none
+        playerShip.physicsBody?.mass = 0.00015
+        playerShip.physicsBody?.friction = 0
+        playerShip.physicsBody?.linearDamping = 0
         addChild(playerShip)
     }
     
@@ -72,6 +101,7 @@ class GameScene : SKScene{
         let enemyShip = Enemy(imageNamed: enemyInfo.imageNamed)
         enemyShip.setLevel(level: enemyInfo.level)
         enemyShip.setupPosition(screenWidth: screenWidth, screenHeight: screenHeight)
+        addChild(enemyShip)
         
         enemyShip.physicsBody = SKPhysicsBody(circleOfRadius: enemyShip.size.width/2)
         enemyShip.physicsBody?.isDynamic = true
@@ -81,7 +111,6 @@ class GameScene : SKScene{
         enemyShip.physicsBody?.mass = 0.00015
         enemyShip.physicsBody?.friction = 0
         enemyShip.physicsBody?.linearDamping = 0
-        addChild(enemyShip)
         enemyShip.move()
     }
     
@@ -150,4 +179,49 @@ class GameScene : SKScene{
         let rotateAction = SKAction.rotate(toAngle: -rotationAngle, duration: 1)
         playerShip.run(rotateAction)
     }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact){
+        var firstBody  = contact.bodyA
+        var secondBody = contact.bodyB
+        if (firstBody.categoryBitMask > secondBody.categoryBitMask){
+            firstBody  = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask & PhysicsCategory.bullet != 0 && secondBody.categoryBitMask & PhysicsCategory.enemy != 0 {
+            if let bullet = firstBody.node, let enemy = secondBody.node as? Enemy {
+                if (enemy.position.y + enemy.size.height / 2) < screenHeight{
+                    bullet.removeFromParent()
+                    enemy.removeFromParent()
+                }
+            }
+        }else if firstBody.categoryBitMask & PhysicsCategory.bullet != 0 && secondBody.categoryBitMask & PhysicsCategory.screenEdge != 0 {
+            if let bullet = firstBody.node{
+                bullet.removeFromParent()
+            }
+        }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
+            if let _ = firstBody.node, let _ = secondBody.node{
+              // game over
+            }
+        }
+    }
+    
+    func didEnd(_ contact: SKPhysicsContact){
+        var firstBody  = contact.bodyA
+        var secondBody = contact.bodyB
+        if (firstBody.categoryBitMask > secondBody.categoryBitMask){
+            firstBody  = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask & PhysicsCategory.screenEdge != 0 && secondBody.categoryBitMask & PhysicsCategory.enemy != 0 {
+            if let enemy = secondBody.node as? Enemy {
+                enemy.removeFromParent()
+            }
+        }
+    }
+    
 }
