@@ -11,6 +11,8 @@ import SpriteKit
 protocol GameProtocol{
     func onGetPoints(points: Int)
     func onGameOver()
+    func onGetBomb()
+    func onLostBomb()
 }
 
 class GameScene : SKScene{
@@ -22,6 +24,7 @@ class GameScene : SKScene{
     private var movableNode : SKNode?
     private var lastTouchLocation : CGPoint = CGPoint(x: 0, y: 0)
     private var points = 0
+    private var bombCount = 0
     
     override func didMove(to view: SKView) {
         
@@ -31,6 +34,7 @@ class GameScene : SKScene{
         lastTouchLocation = CGPoint(x: screenWidth/2, y: screenHeight)
         
         setupWorldPhysics()
+        checkTabClick()
         
         addPlayer()
         run(SKAction.repeatForever(
@@ -49,7 +53,7 @@ class GameScene : SKScene{
     }
     
     private func setupWorldPhysics(){
-        physicsWorld.gravity = .zero
+        physicsWorld.gravity = CGVector(dx: 0, dy: -2)
         physicsWorld.contactDelegate = self
         let padding: CGFloat = 30
         let leftBottomPoint  = CGPoint(x: 0 - padding, y: 0)
@@ -67,6 +71,22 @@ class GameScene : SKScene{
         physicsBody?.collisionBitMask = PhysicsCategory.none
     }
     
+    private func checkTabClick(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.explodedBomb(gesture:)))
+        tap.numberOfTapsRequired = 2
+        self.scene?.view?.addGestureRecognizer(tap)
+    }
+    
+    @objc func explodedBomb(gesture: UITapGestureRecognizer) -> Void {
+       // do something here
+        if bombCount > 0{
+            bombCount -= 1
+            gameDelegate?.onLostBomb()
+            removeAllChildren()
+            addChild(playerShip)
+        }
+    }
+    
     private func addPlayer(){
         let playerX = screenWidth / 2
         let playerY = playerShip.size.height
@@ -82,6 +102,7 @@ class GameScene : SKScene{
         playerShip.physicsBody?.mass = 0.00015
         playerShip.physicsBody?.friction = 0
         playerShip.physicsBody?.linearDamping = 0
+        playerShip.physicsBody?.affectedByGravity = false
         addChild(playerShip)
     }
     
@@ -100,6 +121,7 @@ class GameScene : SKScene{
         bullet.physicsBody?.friction = 0
         bullet.physicsBody?.linearDamping = 0
         bullet.zRotation = playerShip.zRotation
+        bullet.physicsBody?.affectedByGravity = false
         addChild(bullet)
         let magnitude: CGFloat = 2
         bullet.physicsBody?.applyForce(targetPotint: lastTouchLocation, magnitude: magnitude)
@@ -120,6 +142,7 @@ class GameScene : SKScene{
         enemyShip.physicsBody?.mass = 0.00015
         enemyShip.physicsBody?.friction = 0
         enemyShip.physicsBody?.linearDamping = 0
+        enemyShip.physicsBody?.affectedByGravity = false
         enemyShip.move()
     }
     
@@ -149,7 +172,6 @@ class GameScene : SKScene{
             movableNode = playerShip
             movableNode!.position = touchLocation
         }
-        lastTouchLocation = touchLocation
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -164,12 +186,10 @@ class GameScene : SKScene{
             movableNode!.position = touch.location(in: self)
             movableNode = nil
             lastTouchLocation = touch.location(in: self)
-        }else if movableNode == nil{
-            if let touchLocation = touches.first{
-                let angle  = getRotationAngle(currentPosint: playerShip.position, targetPoint: touchLocation.location(in: self))
-                rotateShip(rotationAngle: angle)
-                lastTouchLocation = touches.first!.location(in: self)
-            }
+        }else if let touch = touches.first, movableNode == nil{
+            let angle  = getRotationAngle(currentPosint: playerShip.position, targetPoint: touch.location(in: self))
+            rotateShip(rotationAngle: angle)
+            lastTouchLocation = touches.first!.location(in: self)
         }
     }
     
@@ -213,7 +233,7 @@ class GameScene : SKScene{
         let startPoint = CGPoint(x: x , y: y)
         bombHelp.position = startPoint
         
-        bombHelp.physicsBody = SKPhysicsBody(circleOfRadius: playerShip.size.width/2)
+        bombHelp.physicsBody = SKPhysicsBody(circleOfRadius: bombHelp.size.width/2)
         bombHelp.physicsBody?.isDynamic = true
         bombHelp.physicsBody?.categoryBitMask = PhysicsCategory.bombReward
         bombHelp.physicsBody?.contactTestBitMask = PhysicsCategory.player
@@ -222,9 +242,6 @@ class GameScene : SKScene{
         bombHelp.physicsBody?.friction = 0
         bombHelp.physicsBody?.linearDamping = 0
         addChild(bombHelp)
-        
-        let targetPoint = CGPoint(x: x, y: -y)
-        bombHelp.physicsBody?.applyForce(targetPotint: targetPoint, magnitude: 5)
     }
     
     private func addBulletHelp(){
@@ -247,9 +264,6 @@ class GameScene : SKScene{
         bulletHelp.physicsBody?.friction = 0
         bulletHelp.physicsBody?.linearDamping = 0
         addChild(bulletHelp)
-        
-        let targetPoint = CGPoint(x: x, y: -y)
-        bulletHelp.physicsBody?.applyForce(targetPotint: targetPoint, magnitude: 20)
     }
 }
 
@@ -280,6 +294,16 @@ extension GameScene: SKPhysicsContactDelegate {
         }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
             if let _ = firstBody.node, let _ = secondBody.node{
                 gameDelegate?.onGameOver()
+            }
+        }else if firstBody.categoryBitMask & PhysicsCategory.player != 0 && secondBody.categoryBitMask & PhysicsCategory.bulletReward != 0 {
+            if let _ = firstBody.node, let bulletReward = secondBody.node{
+                bulletReward.removeFromParent()
+            }
+        }else if firstBody.categoryBitMask & PhysicsCategory.player != 0 && secondBody.categoryBitMask & PhysicsCategory.bombReward != 0 {
+            if let _ = firstBody.node, let bombReward = secondBody.node{
+                bombCount += 1
+                gameDelegate?.onGetBomb()
+                bombReward.removeFromParent()
             }
         }
     }
