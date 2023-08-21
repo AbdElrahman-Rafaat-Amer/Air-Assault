@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BC9195062A89604500642D0E /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9195052A89604500642D0E /* PhysicsCategory.swift */; };
 		BC9195092A89609B00642D0E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9195082A89609B00642D0E /* Extensions.swift */; };
+		BCA53BBE2A93F0A900D10A39 /* gameMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BCA53BBD2A93F0A900D10A39 /* gameMusic.mp3 */; };
 		BCB7E58C2A8A10FC002C59AE /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7E58B2A8A10FC002C59AE /* Enemy.swift */; };
 		BCB7E58E2A8A116F002C59AE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7E58D2A8A116F002C59AE /* Utils.swift */; };
 		BCB8CEEE2A8157CB008D312F /* AirAssaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB8CEED2A8157CB008D312F /* AirAssaultApp.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		BC9195052A89604500642D0E /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
 		BC9195082A89609B00642D0E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BCA53BBD2A93F0A900D10A39 /* gameMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameMusic.mp3; sourceTree = "<group>"; };
 		BCB7E58B2A8A10FC002C59AE /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		BCB7E58D2A8A116F002C59AE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		BCB8CEEA2A8157CB008D312F /* AirAssault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirAssault.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,14 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
+		BCA53BBC2A93F09E00D10A39 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				BCA53BBD2A93F0A900D10A39 /* gameMusic.mp3 */,
+			);
+			path = sounds;
+			sourceTree = "<group>";
+		};
 		BCB7E58A2A8A10ED002C59AE /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 		BCB8CEEC2A8157CB008D312F /* AirAssault */ = {
 			isa = PBXGroup;
 			children = (
+				BCA53BBC2A93F09E00D10A39 /* sounds */,
 				BCB7E58A2A8A10ED002C59AE /* model */,
 				BC9195072A89608C00642D0E /* utils */,
 				BCB8CEED2A8157CB008D312F /* AirAssaultApp.swift */,
@@ -270,6 +281,7 @@
 			files = (
 				BCB8CEF52A8157CC008D312F /* Preview Assets.xcassets in Resources */,
 				BCB8CEF22A8157CC008D312F /* Assets.xcassets in Resources */,
+				BCA53BBE2A93F0A900D10A39 /* gameMusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@ class GameScene : SKScene{
     private var lastTouchLocation : CGPoint = CGPoint(x: 0, y: 0)
     private var points = 0
     private var bombCount = 0
+    private var backgroundMusic : SKAudioNode?
     
     override func didMove(to view: SKView) {
         
@@ -35,7 +36,7 @@ class GameScene : SKScene{
         
         setupWorldPhysics()
         checkTabClick()
-        
+        playMusic()
         addPlayer()
         run(SKAction.repeatForever(
             SKAction.sequence([
@@ -50,6 +51,14 @@ class GameScene : SKScene{
                 SKAction.run(addEnemies)
             ])
         ))
+    }
+    
+    private func playMusic(){
+        if let musicURL = Bundle.main.url(forResource: "gameMusic", withExtension: ".mp3") {
+            backgroundMusic = SKAudioNode(url: musicURL)
+            backgroundMusic!.autoplayLooped = true
+            addChild(backgroundMusic!)
+        }
     }
     
     private func setupWorldPhysics(){
@@ -293,6 +302,7 @@ extension GameScene: SKPhysicsContactDelegate {
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.enemy != 0 && secondBody.categoryBitMask & PhysicsCategory.player != 0 {
             if let _ = firstBody.node, let _ = secondBody.node{
+                backgroundMusic?.removeFromParent()
                 gameDelegate?.onGameOver()
             }
         }else if firstBody.categoryBitMask & PhysicsCategory.player != 0 && secondBody.categoryBitMask & PhysicsCategory.bulletReward != 0 {
